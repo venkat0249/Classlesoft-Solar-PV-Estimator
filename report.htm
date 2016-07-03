@@ -1,0 +1,372 @@
+﻿ <!DOCTYPE html>
+<html>
+
+<head>
+<title>Report</title>
+<link rel="stylesheet" type="text/css" href="solar-pv-estimator-files/solar-estimator-step-3.css">
+<script type="text/javascript" src="solar-pv-estimator-files/modernizr-2.7.1.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="solar-pv-estimator-files/favicon.ico">
+<script type="text/javascript" src="solar-pv-estimator-files/carbon-emit-calc.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBQ9qz1U-0KgKV-R-EAIgaPX-0dMIBh4IY"></script>
+<div id="chart_div"></div>  
+<style>
+h1 {
+    border-bottom: 3px solid #cc9900;
+    color: #996600;
+    font-size: 30px;
+}
+table, th , td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#btnPrint").live("click", function () {
+            var divContents = $("#dvContainerPrint").html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>Classlesoft Solar PV Estimator</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
+	<!-- Place this tag in your head or just before your close body tag. -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78500469-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+<div id="dvContainerPrint">
+<img width="30" src="solar-pv-estimator-files/print-icon.png"/><input type="button" value="Print Report" id="btnPrint" />
+<div class="w-section w-clearfix">
+<img width="241" src="solar-pv-estimator-files/pv-estimater-logo.png"/>
+<div id="main-header-right" class="main-header-right-style">
+<a href="http://pv-estimator.classlesoft.in" target="_blank">Visit&nbsp;Homepage</a>&nbsp;
+<a href="mailto:venkat@classlesoft.in?subject=Classlesoft%20PV%20Estimator" target="_blank">Email: venkat@classlesoft.in</a>&nbsp;
+<a href="http://classlesoft.in/index.php/about-us" target="_blank"> About Us</a>&nbsp;
+
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone" data-annotation="inline" data-width="300"></div>
+<div class="w-widget w-widget-facebook">
+<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FClassle-Soft%2F224816180935158%2F&amp;layout=standard&amp;locale=en_US&amp;action=like&amp;show_faces=false&amp;share=false" scrolling="no" frameborder="0" allowtransparency="true" style="border: none; overflow: hidden; width: 225px; height: 35px;"></iframe>
+</div>
+</div>
+</div>
+<div class="w-section">
+<h3 id="total_ac_out"> Estimated Annual Energy Production: <span id="span_yearly_out"></span> kWh</h3>
+</div>
+<div class="w-section">
+<div class="w-row">
+<div class="w-col w-col-9">
+<div id="id01">
+</div>
+</div>
+<div class="w-col w-col-3">
+<h4>Location</h4>
+<div>
+<img id="imgMap" alt="Location Map" style="display: none" />
+<div id="inp_Location_Tbl" class="loctablestyle">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-section">
+<div class="w-row">
+<div class="w-col w-col-6">
+<h4>Energy Production</h4>
+<div id="chart_energy"></div>
+</div>
+<div class="w-col w-col-6"><h4>Solar Radiation</h4>
+<div id="chart_solarRad"></div>
+</div>
+</div>
+</div>
+<div class="w-section">
+<div class="w-row">
+<div class="w-col w-col-6">
+<h4>System Configuration</h4>
+<div id="system_config_input"></div>
+</div>
+<div class="w-col w-col-6">
+<h4>Carbon Emissions</h4><div>
+<div class="co2savedstyle"><span id="co2Saved"> </span> Kgs of Co2 Saved annually</div>
+</div>
+<div>
+<img width="36" src="solar-pv-estimator-files/Tree-22-icon.png"><div><span id="TreesSaved"> </span> Trees Saved</div>
+<img width="36" src="solar-pv-estimator-files/Car-2-icon.png"><div><span id="CarsSaved"> </span> Cars emmited</div>
+<img width="36" src="solar-pv-estimator-files/City-Gas-Station-icon.png"><div><span id="GasSaved"> </span> Gas Stations</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-section">
+<div id="caution-section" class="caution-section-style">Caution:<br>The performance predictions calculated by Classlesoft PV Estimator include many inherent assumptions and uncertainties and do not reflect variations between PV technologies nor site-specific characteristics. </div>
+</div>
+
+</div>
+<script>
+var xmlhttp = new XMLHttpRequest();
+var latit=getParameterByName("latit");
+var longit=getParameterByName("longit");
+var country=getParameterByName("country");
+var sCapacity=getParameterByName("sCapacity");
+var losses=getParameterByName("losses");
+var moduleType=getParameterByName("moduleType");
+var tilt=getParameterByName("tilt");
+var azimuth=getParameterByName("azimuth");
+var dcRatio=getParameterByName("dcRatio");
+var groundRatio=getParameterByName("groundRatio");
+var invEfficiency=getParameterByName("invEfficiency");
+var arrayType=getParameterByName("arrayType");
+if(country=="United States")
+{
+var url = "https://developer.nrel.gov/api/pvwatts/v5.json?api_key=u9hEEQj62HzHMi9wUvEWe3LxC25aAgdFfFMiwQHy&format=json&radius=300&lat="+latit+"&lon="+longit+"&system_capacity="+sCapacity+"&azimuth="+azimuth+"&tilt="+tilt+"&array_type="+arrayType+"&module_type="+moduleType+"&losses="+losses+"&dc_ac_ratio="+dcRatio+"&gcr="+groundRatio+"&inv_eff="+invEfficiency;
+}
+else if(country=="India")
+{var url = "https://developer.nrel.gov/api/pvwatts/v5.json?api_key=u9hEEQj62HzHMi9wUvEWe3LxC25aAgdFfFMiwQHy&format=json&radius=300&dataset=IN&lat="+latit+"&lon="+longit+"&system_capacity="+sCapacity+"&azimuth="+azimuth+"&tilt="+tilt+"&array_type="+arrayType+"&module_type="+moduleType+"&losses="+losses+"&dc_ac_ratio="+dcRatio+"&gcr="+groundRatio+"&inv_eff="+invEfficiency;}
+else
+{
+var url = "https://developer.nrel.gov/api/pvwatts/v5.json?api_key=u9hEEQj62HzHMi9wUvEWe3LxC25aAgdFfFMiwQHy&format=json&radius=300&dataset=intl&lat="+latit+"&lon="+longit+"&system_capacity="+sCapacity+"&azimuth="+azimuth+"&tilt="+tilt+"&array_type="+arrayType+"&module_type="+moduleType+"&losses="+losses+"&dc_ac_ratio="+dcRatio+"&gcr="+groundRatio+"&inv_eff="+invEfficiency;
+}
+var arr;
+xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        myFunction(xmlhttp.responseText);
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+    }
+	else if(xmlhttp.status == 403 || xmlhttp.status == 404 )
+	alert("Sorry! An error occured! try again after sometime");
+	else if(xmlhttp.status == 429)
+	alert("Today's maximum usage limit has reached. Please try again tomorrow. Sorry for the inconvinence");
+	else if(xmlhttp.status ==422)
+	alert("Sorry! No solar radiation data found for the requested location. Please try another location.");
+}
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function myFunction(response) {
+    arr = JSON.parse(response);
+	//alert(arr.errors.length);
+
+	//annual ac output estimation
+	document.getElementById("span_yearly_out").innerHTML = arr.outputs.ac_annual.toFixed(0);
+	//alert(arr.outputs.solrad_annual);
+	var electricity_price=getParameterByName("electricPrice");
+    var i;
+    var out = "<table><tr><td>Month</td><td>AC Output(kWh)</td><td>DC Output(kWh)</td><td>Plane of Array(kWh/m2)</td><td>Solar Radiation(kWh/m2/Day)</td><td>Estimated Savings(€)</td></tr>";
+var arrMonths=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var annualSavings=0;
+
+    for(i = 0; i < 12; i++) {
+        out += "<tr><td>" +
+		arrMonths[i] +
+        "</td><td>" +
+        arr.outputs.ac_monthly[i].toFixed(1) +
+        "</td><td>" +
+		arr.outputs.dc_monthly[i].toFixed(1) +
+        "</td><td>" +
+        arr.outputs.poa_monthly[i].toFixed(1) +
+        "</td><td>" +
+        arr.outputs.solrad_monthly[i].toFixed(1) +
+		"</td><td>" +
+        (arr.outputs.ac_monthly[i].toFixed(0)*electricity_price).toFixed(0) +
+        "</td></tr>";
+		if(i==0)
+		annualSavings=0;
+		annualSavings += parseInt((arr.outputs.ac_monthly[i].toFixed(0)*electricity_price).toFixed(0));
+    }
+    out =out +"<tr><td>Total</td><td>"+arr.outputs.ac_annual.toFixed(0)+" kWh</td><td></td><td></td><td></td><td>"+annualSavings+" €</td></tr></table>";
+    document.getElementById("id01").innerHTML = out;
+	
+	//update co2 saved
+	Co2Emmissions(country,arr.outputs.ac_annual.toFixed(0));
+	
+	//update input configuration data
+    var inpConfigTbl = "<table><tr><td>Latitude</td><td>" +arr.inputs.lat +"</td></tr>"+
+		"<tr><td>Logitude</td><td>" +arr.inputs.lon +"</td></tr>"+
+		"<tr><td>System Capacity (kW)</td><td>" +arr.inputs.system_capacity +"</td></tr>"+
+		"<tr><td>Azimuth</td><td>" +arr.inputs.azimuth +"</td></tr>"+
+		"<tr><td>Tilt</td><td>" +arr.inputs.tilt +"</td></tr>"+
+		"<tr><td>Losses(%)</td><td>" +arr.inputs.losses +"</td></tr>"+
+		"<tr><td>Inverter Efficiency(%)</td><td>" +invEfficiency +"</td></tr>"+
+		"<tr><td>Ground Coverage ratio</td><td>" +groundRatio +"</td></tr>"+
+		"<tr><td>DC to AC ratio</td><td>" +dcRatio +"</td></tr>";
+	if(arr.inputs.module_type==0)
+	{
+	inpConfigTbl +=  "<tr><td>Module Type</td><td>Standard</td></tr>";
+	}
+	else if(arr.inputs.module_type==1)
+	{
+	inpConfigTbl +=  "<tr><td>Module Type</td><td>Premium</td></tr>";
+	}
+	else if(arr.inputs.module_type==2)
+	{
+	inpConfigTbl +=  "<tr><td>Module Type</td><td>Thin film</td></tr>";
+	}
+	if(arr.inputs.array_type==0)
+	{
+	inpConfigTbl +=  "<tr><td>Array Type</td><td>Fixed - Open Rack</td></tr>";
+	}
+	else if(arr.inputs.array_type==1)
+	{
+	inpConfigTbl +=  "<tr><td>Array Type</td><td>Fixed - Roof Mounted</td></tr>";
+	}
+	else if(arr.inputs.array_type==2)
+	{
+	inpConfigTbl +=  "<tr><td>Array Type</td><td>1-Axis</td></tr>";
+	}
+	else if(arr.inputs.array_type==3)
+	{
+	inpConfigTbl +=  "<tr><td>Array Type</td><td>1-Axis Backtracking</td></tr>";
+	}
+	else
+	{
+	inpConfigTbl +=  "<tr><td>Array Type</td><td>2-Axis</td></tr>";
+	}
+    inpConfigTbl += "</table>";
+    document.getElementById("system_config_input").innerHTML = inpConfigTbl;
+	//set location image and location info
+	setLocationImage();
+	var inpLocationTbl = "<table><tr><td>Latitude</td><td>" +arr.inputs.lat +"</td></tr>"+
+		"<tr><td>Logitude</td><td>" +arr.inputs.lon +"</td></tr>"+
+		"<tr><td>Nearest Weather Station</td><td>" +arr.station_info.city +"</td></tr></table>";
+	document.getElementById("inp_Location_Tbl").innerHTML = inpLocationTbl;
+}
+
+
+function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+	  var data_solarRad = new google.visualization.DataTable();
+      data.addColumn('string', 'Month');
+      data.addColumn('number', 'AC Output');
+	  data.addColumn('number', 'DC Output');
+	  data.addColumn('number', 'Plane of Array');
+	  data_solarRad.addColumn('string', 'Month');
+	  data_solarRad.addColumn('number', 'SolRad');
+	  //data.addColumn('number', 'SolRad');
+var arrMonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//chart input data for output energy graph
+	  data.addRows(12);
+	  for (var i = 0; i < 12; i++)
+                     {
+                        for (var k = 0; k <4; k++)//Total Column 
+                         {
+						 if(k==0)
+						 data.setCell(i, k, arrMonths[i].toString());
+						 else if(k==1)
+						 {
+						 data.setCell(i,k,parseFloat(arr.outputs.ac_monthly[i]));
+						 }
+						 else if(k==2)
+						 data.setCell(i,k,parseFloat(arr.outputs.dc_monthly[i]));
+						 else if(k==3)
+						 data.setCell(i,k,parseFloat(arr.outputs.poa_monthly[i]));
+						 }
+					}
+//chart input data for Solar Radiation Graph
+data_solarRad.addRows(12);
+ for (var i = 0; i < 12; i++)
+ {
+	  for (var k = 0; k <2; k++)//Total Column 
+         {
+			if(k==0)
+			data_solarRad.setCell(i, k, arrMonths[i].toString());
+			else if(k==1)
+			{
+			data_solarRad.setCell(i,k,parseFloat(arr.outputs.solrad_monthly[i]));
+			}
+		}
+}
+      var options = {
+        hAxis: {
+          title: 'Time (Months)'
+        },
+        vAxis: {
+          title: 'Energy (KWh)'
+        }
+      };
+	  //set lables for solar radiation chart
+	  var options_solarRad = {
+        hAxis: {
+          title: 'Time (Months)'
+        },
+        vAxis: {
+          title: 'Solar Radiation (kWh / m2 / day)'
+        }
+      };
+		//charts script
+		var chart = new google.visualization.LineChart(document.getElementById('chart_energy'));
+      chart.draw(data, options);
+	  var chart_solarRad_ = new google.visualization.LineChart(document.getElementById('chart_solarRad'));
+      chart_solarRad_.draw(data_solarRad, options_solarRad);
+    }
+</script>
+
+
+<script>
+
+
+function setLocationImage() {
+var mapOptions = {
+                center: new google.maps.LatLng(arr.inputs.lat, arr.inputs.lon),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            //URL of Google Static Maps.
+            var staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
+
+            //Set the Google Map Center.
+            staticMapUrl += "?center=" + mapOptions.center.G + "," + mapOptions.center.K;
+
+            //Set the Google Map Size.
+            staticMapUrl += "&size=220x300";
+
+            //Set the Google Map Zoom.
+            staticMapUrl += "&zoom=" + mapOptions.zoom;
+
+            //Set the Google Map Type.
+            staticMapUrl += "&maptype=" + mapOptions.mapTypeId;
+
+            //Loop and add Markers.
+                staticMapUrl += "&markers=color:red|" + arr.inputs.lat + "," + arr.inputs.lon;
+            //Display the Image of Google Map.
+            var imgMap = document.getElementById("imgMap");
+            imgMap.src = staticMapUrl;
+            imgMap.style.display = "block";
+        }
+</script>
+
+ 
+</body>
+</html> 
