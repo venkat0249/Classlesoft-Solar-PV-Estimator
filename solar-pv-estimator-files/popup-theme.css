@@ -1,0 +1,170 @@
+#_head {
+    text-align: center;
+    color: white;
+    background-color: rgb(0, 111, 150);
+}
+
+#txtPlaces {
+    background-color: rgb(211, 211, 211);
+    width: 250px;
+}
+
+.bgOrange {
+    background-color: orange;
+}
+
+.bgGreen {
+    background-color: #79BAEC;
+}
+
+input::-webkit-input-placeholder {
+    color: red;
+}
+
+input:-moz-placeholder {
+    /* FF 4-18 */
+    color: black;
+}
+
+input::-moz-placeholder {
+    /* FF 19+ */
+    color: black;
+}
+
+input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: black;
+}
+
+body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+
+/* The Modal (background) */
+
+
+/* Modal Header */
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #79BAEC;
+    color: #151B54;
+}
+
+
+/* Modal Body */
+
+.modal-body {
+    padding: 2px 16px;
+    vertical-align: center;
+}
+
+
+/* Modal Footer */
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #79BAEC;
+    color: #151B54;
+}
+
+
+/* Modal Content */
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+
+/* Add Animation */
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content/Box */
+
+
+/* The Close Button */
+
+.close {
+    color: #aaa;
+    float: right;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+table {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-footer {
+    text-align: center;
+    vertical-align: center;
+}
+
+.error {
+    color: red;
+}
