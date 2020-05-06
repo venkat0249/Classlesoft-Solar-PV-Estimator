@@ -1,8 +1,6 @@
 ## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/venkat0249/Classlesoft-Solar-PV-Estimator/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Solar PV Estimator is web based tool to estimate the amount of electricity that can be generated from a grid Photovoltaic system and its carbon savings at any location in the world. Its an open source project written on javascript.
 
 ### Markdown
 
