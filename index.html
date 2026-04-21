@@ -13,7 +13,7 @@
 <script type="text/javascript" src="solar-pv-estimator-files/popup-initial.js"></script>
 <script src="solar-pv-estimator-files/ajax.js"></script> 
 <script src="solar-pv-estimator-files/java.js"></script> 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBQ9qz1U-0KgKV-R-EAIgaPX-0dMIBh4IY&libraries=places"></script>
+<script type="text/javascript" src="***Google maps API key here***"></script>
 <script type="text/javascript">
 var lat, lon, map, marker, geocoder;
 
@@ -163,13 +163,13 @@ marker.setMap(map);
   <!--lat long textboxes -->
   <br> *If above textbox did not work, you may enter location coordinates manually in textboxes given below.
   <br>
-   Latitude:<input name="txtlat" id="txtlat"  onkeypress="updateMap();" onchange="updateMap();" type="text"/> (+°N,-°S)
-<br>Longitude:<input name="txtlon" id="txtlon" onkeypress="updateMap();" onchange="updateMap();" type="text"/> (+°E,-°W)
+   Latitude:<input name="txtlat" id="txtlat"  onkeypress="updateMap();" onchange="updateMap();" type="text"/> (+Â°N,-Â°S)
+<br>Longitude:<input name="txtlon" id="txtlon" onkeypress="updateMap();" onchange="updateMap();" type="text"/> (+Â°E,-Â°W)
  </div>
 
  
  <div style="margin:10px;">
-  <!--<b>Location:</b> <span style="margin-left:5px;color:green;" id="rgnaddress">Unter Käster 1, 50667 Köln, Germany</span><input id="btnsetlatlon" style="display:none;" value="Lets go!" onclick='setmap();toggleforce("btnsetlatlon","none");' type="button"> -->
+  <!--<b>Location:</b> <span style="margin-left:5px;color:green;" id="rgnaddress">Unter KÃ¤ster 1, 50667 KÃ¶ln, Germany</span><input id="btnsetlatlon" style="display:none;" value="Lets go!" onclick='setmap();toggleforce("btnsetlatlon","none");' type="button"> -->
  <!--Add popup button code to following button -->
 <center><input id="popupBtn" style="margin:15px;padding:15px;background:#097DA7;width:70%; border:2px solid #CCC;color:white;font-weight:bold;font-size:16;" value="Step-2: Enter PV System Info" type="button"></center>
  </div>
@@ -267,7 +267,7 @@ marker.setMap(map);
                             </tr>
 							<tr>
                                 <td>
-                                    <label>Electricity Price per kWh (in �)</label>
+                                    <label>Electricity Price per kWh (in )</label>
                                 </td>
                                 <td>
                                     <input type="number" name="electricP" class="bgGreen" required></input>
